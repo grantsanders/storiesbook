@@ -6,4 +6,7 @@ public class OpenAIService
     {
         
     }
+
+    public async Task<string> GetDescriptionOfTicket(List<string> ticketInformation) => "";
+    
 }
