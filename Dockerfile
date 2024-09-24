@@ -19,6 +19,5 @@ WORKDIR /app
 COPY --from=build /app .
 
 EXPOSE 443
-EXPOSE 80
 
 ENTRYPOINT ["dotnet", "storiesbook.dll"]
