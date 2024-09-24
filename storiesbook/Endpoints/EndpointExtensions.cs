@@ -1,16 +1,17 @@
+using Atlassian.Jira;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using storiesbook.Services;
+
 namespace storiesbook.Endpoints;
 
 public static class EndpointExtensions
 {
     public static void MapEndpoints(this WebApplication app)
     {
-        app.MapPost("/SummarizeTicket", (string ticketId) =>
+        app.MapPost("/SummarizeTicket", async Task<List<string>> (string ticketId, [FromServices] JiraService jiraService) =>
             {
-                /* logic will go here:
-                 • grab jira ticket info
-                 • pass that info to ai summarization tool
-                 • pass summarized text back to GitHub
-                 */
+                return (await jiraService.GetTicketInformation(ticketId));
             })
             .WithName("SummarizeTicket")
             .WithOpenApi();

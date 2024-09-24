@@ -22,6 +22,7 @@ public class JiraService
         var ticketInformation = new List<string>();
         
         ticketInformation.Add(issue.Summary);
+        ticketInformation.Add(issue.Description);
         foreach (var comment in comments)
         {
             ticketInformation.Add(comment.Body);
