@@ -1,3 +1,5 @@
+using storiesbook.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,15 +18,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/SummarizeTicket", (string ticketId) =>
-    {
-        /* logic will go here:
-         • grab jira ticket info
-         • pass that info to ai summarization tool
-         • pass summarized text back to GitHub
-         */
-    })
-    .WithName("SummarizeTicket")
-    .WithOpenApi();
+app.MapEndpoints();
 
 app.Run();
