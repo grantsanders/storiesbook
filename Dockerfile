@@ -1,33 +1,23 @@
-# Use the official .NET 8 SDK Alpine image as a build environment
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build-env
+# build stage
 
-# Set the working directory inside the container
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+RUN dotnet tool install --global dotnet-dev-certs
+RUN dotnet dev-certs https -ep /https/aspnetapp.pfx -p password
+RUN dotnet dev-certs https --trust
+
+COPY . .
+RUN dotnet restore storiesbook.csproj --disable-parallel
+
+RUN dotnet publish storiesbook.csproj -c release -o /app --no-restore
+# serve stage
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+COPY --from=build /https/aspnetapp.pfx /https/aspnetapp.pfx
 WORKDIR /app
+COPY --from=build /app .
 
-# Copy the project files into the container
-COPY *.sln ./
-COPY storiesbook/*.csproj ./storiesbook/
+EXPOSE 443
 
-# Restore dependencies
-RUN dotnet restore
-
-# Copy the remaining files into the container
-COPY . ./
-
-# Publish the application in Release mode to the 'out' folder
-RUN dotnet publish -c Release -o /out
-
-# Use the official .NET runtime image for production
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS runtime
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the published application from the build environment
-COPY --from=build-env /out .
-
-# Expose the necessary port (adjust this if needed)
-EXPOSE 80
-
-# Set the entry point for the application
 ENTRYPOINT ["dotnet", "storiesbook.dll"]
