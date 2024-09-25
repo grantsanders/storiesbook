@@ -56,7 +56,7 @@ namespace storiesbook.Services
             promptBuilder.AppendLine("Please format your response with the following sections:");
             promptBuilder.AppendLine("### Issue Summary: Provide a brief summary of the issue.");
             promptBuilder.AppendLine("### People Involved: List all people involved, including the issue creator and anyone who commented.");
-            promptBuilder.AppendLine("### Comments Summary: Summarize the key points of the comments. If there are no comments, omit this line.");
+            promptBuilder.AppendLine("### Comments Summary: Summarize the key points of the comments. If there are no comments, omit this line entirely from the response");
             promptBuilder.AppendLine();
             promptBuilder.AppendLine("Here are the details:");
 
