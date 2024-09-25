@@ -64,11 +64,14 @@ namespace storiesbook.Services
             promptBuilder.AppendLine($"- Issue Creator: {issueCreator}");
             promptBuilder.AppendLine($"- Description: {issueDescription}");
 
-            // Add the commenters and their comments
-            promptBuilder.AppendLine("Comments:");
-            for (int i = 0; i < commenters.Count; i++)
+            if (commenters.Count > 0)
             {
-                promptBuilder.AppendLine($"- {commenters[i]}: {comments[i]}");
+                // Add the commenters and their comments
+                promptBuilder.AppendLine("Comments:");
+                for (int i = 0; i < commenters.Count; i++)
+                {
+                    promptBuilder.AppendLine($"- {commenters[i]}: {comments[i]}");
+                }
             }
 
             string prompt = promptBuilder.ToString();
