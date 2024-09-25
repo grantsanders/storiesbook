@@ -64,10 +64,12 @@ jobs:
           JIRA_URL="https://whatdadogdoin.atlassian.net/browse/$JIRA_TICKET"
           
           # Create a Markdown-style link for the Jira ticket
-          PREPENDED_TEXT="**Jira Ticket:** [$JIRA_TICKET]($JIRA_URL)\n\n"
+          PREPENDED_TEXT="**Jira Ticket:** [$JIRA_TICKET]($JIRA_URL)
+          
+          "
           
           # Prepend the text to the SUMMARY
-          SUMMARY=echo "$PREPENDED_TEXT$SUMMARY"
+          SUMMARY="$PREPENDED_TEXT$SUMMARY"
           
           # Output the summary for the next step
           # Write the SUMMARY to a GitHub environment file to preserve newlines
