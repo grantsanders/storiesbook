@@ -9,18 +9,13 @@ public static class EndpointExtensions
 {
     public static void MapEndpoints(this WebApplication app)
     {
-        app.MapPost("/SummarizeTicket", async Task<List<string>> (string ticketId, [FromServices] JiraService jiraService) =>
+        app.MapPost("/SummarizeTicket", async Task<string> (string ticketId, [FromServices] JiraService jiraService, [FromServices] OpenAIService openAIService) =>
             {
-                return (await jiraService.GetTicketInformation(ticketId));
+                var ticketInformation = await jiraService.GetTicketInformation(ticketId);
+                return (await openAIService.GetDescriptionOfTicket(ticketInformation));
             })
             .WithName("SummarizeTicket")    
             .WithOpenApi();
 
-        app.MapPost("/GPTTest", async Task<string> (List<string> JiraInformation, [FromServices] OpenAIService openAIService) =>
-        {
-            return (await openAIService.GetDescriptionOfTicket(JiraInformation));
-        })
-            .WithName("GPTTest")
-            .WithOpenApi();
     }
 }

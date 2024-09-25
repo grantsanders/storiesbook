@@ -17,7 +17,7 @@ namespace storiesbook.Services
 
         public async Task<string> GetDescriptionOfTicket(List<string> JiraInformation)
         {
-            ChatClient client = new(model: "gpt-4o-mini", apiKey: _config["OPENAI_API_KEY_1"]);
+            ChatClient client = new(model: "gpt-4o-mini", apiKey: _config["OPENAI_API_KEY"]);
 
             // Initialize variables to hold the issue creator, description, and comments
             string issueCreator = string.Empty;
