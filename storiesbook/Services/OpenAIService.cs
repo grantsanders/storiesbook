@@ -24,6 +24,7 @@ namespace storiesbook.Services
             string issueDescription = string.Empty;
             List<string> commenters = new List<string>();
             List<string> comments = new List<string>();
+            bool firstLine = true;
 
             // Parse the Jira information
             foreach (var line in JiraInformation)
@@ -34,9 +35,10 @@ namespace storiesbook.Services
                 var key = parts[0].Trim();   // Get the part before the colon (the key)
                 var value = parts[1].Trim(); // Get the part after the colon (the value)
 
-                if (key.Equals("IssueCreator", StringComparison.OrdinalIgnoreCase))
+                if (firstLine)
                 {
-                    issueCreator = value; // Store the issue creator
+                    issueCreator = key; // Store the issue creator
+                    firstLine = false;
                 }
                 else if (key.Equals("Description", StringComparison.OrdinalIgnoreCase))
                 {
@@ -49,7 +51,6 @@ namespace storiesbook.Services
                 }
             }
 
-            // Construct the prompt based on the parsed JiraInformation
             StringBuilder promptBuilder = new StringBuilder();
             promptBuilder.AppendLine("You will be provided with an issue's details, including its creator, description, and comments.");
             promptBuilder.AppendLine("Please format your response with the following sections:");
