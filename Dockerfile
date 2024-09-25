@@ -18,6 +18,6 @@ COPY --from=build /https/aspnetapp.pfx /https/aspnetapp.pfx
 WORKDIR /app
 COPY --from=build /app .
 
-EXPOSE 443
+EXPOSE 443 
 
 ENTRYPOINT ["dotnet", "storiesbook.dll"]
