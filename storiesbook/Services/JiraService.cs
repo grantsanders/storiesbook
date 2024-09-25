@@ -21,11 +21,11 @@ public class JiraService
 
         var ticketInformation = new List<string>();
         
-        ticketInformation.Add(issue.Summary);
-        ticketInformation.Add(issue.Description);
+        ticketInformation.Add($"{issue.ReporterUser.DisplayName}: {issue.Summary}");
+        ticketInformation.Add($"Description: {issue.Description}");
         foreach (var comment in comments)
         {
-            ticketInformation.Add(comment.Body);
+            ticketInformation.Add($"{comment.AuthorUser.DisplayName}: {comment.Body}");
         }
 
         return ticketInformation;
