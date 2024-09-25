@@ -49,7 +49,6 @@ namespace storiesbook.Services
                 }
             }
 
-            // Construct the prompt based on the parsed JiraInformation
             StringBuilder promptBuilder = new StringBuilder();
             promptBuilder.AppendLine("You will be provided with an issue's details, including its creator, description, and comments.");
             promptBuilder.AppendLine("Please format your response with the following sections:");
