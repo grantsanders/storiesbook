@@ -15,5 +15,12 @@ public static class EndpointExtensions
             })
             .WithName("SummarizeTicket")
             .WithOpenApi();
+
+        app.MapPost("/GPTTest", async Task<string> ([FromServices] OpenAIService openAIService) =>
+        {
+            return (await openAIService.GetDescriptionOfTicket());
+        })
+            .WithName("GPTTest")
+            .WithOpenApi();
     }
 }

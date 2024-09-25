@@ -1,12 +1,21 @@
-namespace storiesbook.Services;
-
-public class OpenAIService
+namespace storiesbook.Services
 {
-    public OpenAIService()
-    {
-        
-    }
+    using OpenAI.Chat;
 
-    public async Task<string> GetDescriptionOfTicket(List<string> ticketInformation) => "";
-    
+    public class OpenAIService
+    {
+        public OpenAIService()
+        {
+
+        }
+
+        public async Task<string> GetDescriptionOfTicket()
+        {
+            ChatClient client = new(model: "gpt-4o", apiKey: Environment.GetEnvironmentVariable("OPENAI_API_KEY"));
+
+            ChatCompletion completion = await client.CompleteChatAsync("Say 'this is a test.'");
+
+            return completion.ToString();
+        }
+    }
 }
