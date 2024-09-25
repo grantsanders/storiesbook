@@ -61,7 +61,7 @@ jobs:
 
           SUMMARY=${SUMMARY:1:-1}
 
-          JIRA_URL="https://jira.example.com/browse/$JIRA_TICKET"
+          JIRA_URL="https://whatdadogdoin.atlassian.net/browse/$JIRA_TICKET"
           
           # Create a Markdown-style link for the Jira ticket
           PREPENDED_TEXT="Jira Ticket: [$JIRA_TICKET]($JIRA_URL)\n\n"
