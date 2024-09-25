@@ -70,7 +70,10 @@ jobs:
           SUMMARY=$PREPENDED_TEXT$SUMMARY
           
           # Output the summary for the next step
-          # echo "::set-output name=summary::$SUMMARY"
+          # Write the SUMMARY to a GitHub environment file to preserve newlines
+          echo "summary<<EOF" >> $GITHUB_ENV
+          echo "$SUMMARY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           
       # 4. Post the Summary as a PR Comment
       - name: Post Summary as a Comment
