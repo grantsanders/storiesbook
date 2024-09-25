@@ -13,12 +13,12 @@ public static class EndpointExtensions
             {
                 return (await jiraService.GetTicketInformation(ticketId));
             })
-            .WithName("SummarizeTicket")
+            .WithName("SummarizeTicket")    
             .WithOpenApi();
 
-        app.MapPost("/GPTTest", async Task<string> ([FromServices] OpenAIService openAIService) =>
+        app.MapPost("/GPTTest", async Task<string> (List<string> JiraInformation, [FromServices] OpenAIService openAIService) =>
         {
-            return (await openAIService.GetDescriptionOfTicket());
+            return (await openAIService.GetDescriptionOfTicket(JiraInformation));
         })
             .WithName("GPTTest")
             .WithOpenApi();
