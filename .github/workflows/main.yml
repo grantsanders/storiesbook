@@ -70,6 +70,7 @@ jobs:
 
           SUMMARY="${SUMMARY:2}"
 
+
           # Prepend the text to the SUMMARY
           SUMMARY="$PREPENDED_TEXT$SUMMARY"
           
