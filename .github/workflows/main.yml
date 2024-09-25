@@ -65,8 +65,8 @@ jobs:
       # 4. Post the Summary as a PR Comment
       - name: Post Summary as a Comment
         run: |
-          SUMMARY="${{ steps.summarize.outputs.summary }}"
-          if [[ -z "$SUMMARY" ]]; then
+          SUMMARY='${{ steps.summarize.outputs.summary }}'
+          if [[ -z '$SUMMARY' ]]; then
             echo "No summary to post."
             exit 1
           fi
