@@ -59,6 +59,8 @@ jobs:
           # Make an API request to get the ticket summary
           SUMMARY=$(curl -X POST "$API_URL=$JIRA_TICKET")
 
+          echo $SUMMARY
+          
           SUMMARY=${SUMMARY:1:-1}
 
           JIRA_URL="https://whatdadogdoin.atlassian.net/browse/$JIRA_TICKET"
