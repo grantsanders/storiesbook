@@ -15,19 +15,17 @@ public class JiraService
     public async Task<List<string>> GetTicketInformation(string ticketId)
     {
         var jira = Jira.CreateRestClient(_config["JIRA_URL"], _config["JIRA_USERNAME"], _config["JIRA_API_KEY"]);
-
         var issue = await jira.Issues.GetIssueAsync(ticketId);
         var comments = await issue.GetCommentsAsync();
 
         var ticketInformation = new List<string>();
-        
-        ticketInformation.Add($"{issue.ReporterUser.DisplayName}: {issue.Summary}");
+        ticketInformation.Add($"Title: {issue.ReporterUser.DisplayName}: {issue.Summary}");
         ticketInformation.Add($"Description: {issue.Description}");
         foreach (var comment in comments)
         {
-            ticketInformation.Add($"{comment.AuthorUser.DisplayName}: {comment.Body}");
+            ticketInformation.Add($"Comment: {comment.AuthorUser.DisplayName}: {comment.Body}");
         }
-
+        
         return ticketInformation;
     }
 }
