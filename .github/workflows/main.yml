@@ -58,7 +58,9 @@ jobs:
 
           # Make an API request to get the ticket summary
           SUMMARY=$(curl -X POST "$API_URL=$JIRA_TICKET")
-          
+
+          SUMMARY=${SUMMARY:1:-1}
+
           # Output the summary for the next step
           echo "::set-output name=summary::$SUMMARY"
           
