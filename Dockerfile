@@ -8,9 +8,9 @@ RUN dotnet dev-certs https -ep /https/aspnetapp.pfx -p password
 RUN dotnet dev-certs https --trust
 
 COPY . .
-RUN dotnet restore storiesbook.csproj --disable-parallel
+RUN dotnet restore storiesbook/storiesbook.csproj --disable-parallel
 
-RUN dotnet publish storiesbook.csproj -c release -o /app --no-restore
+RUN dotnet publish storiesbook/storiesbook.csproj -c release -o /app --no-restore
 # serve stage
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
