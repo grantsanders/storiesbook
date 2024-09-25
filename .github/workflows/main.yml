@@ -1,0 +1,71 @@
+name: JIRA Ticket Summarization
+
+on:
+  pull_request:
+    branches:
+      - dev
+    types:
+      - opened
+      - reopened
+      - edited
+
+jobs:
+  validate-jira:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Check if PR description or title contains JIRA ticket
+      - name: Check for JIRA Ticket ID in PR
+        id: jira-check
+        run: |
+          TICKET_REGEX="([A-Z]+-\d+)"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_BODY="${{ github.event.pull_request.body }}"
+
+          # Try to find a JIRA ticket ID in the title or body
+          if [[ "$PR_TITLE" =~ $TICKET_REGEX ]]; then
+            echo "Found JIRA ticket in PR title: ${BASH_REMATCH[1]}"
+            echo "::set-output name=jira_ticket::${BASH_REMATCH[1]}"
+          elif [[ "$PR_BODY" =~ $TICKET_REGEX ]]; then
+            echo "Found JIRA ticket in PR body: ${BASH_REMATCH[1]}"
+            echo "::set-output name=jira_ticket::${BASH_REMATCH[1]}"
+          else
+            echo "No JIRA ticket found."
+            exit 1
+          fi
+
+      # 3. Get JIRA Ticket Summary from API
+      - name: Request JIRA Ticket Summary from Custom API
+        id: summarize
+        run: |
+          JIRA_TICKET=${{ steps.jira-check.outputs.jira_ticket }}
+          if [[ -z "$JIRA_TICKET" ]]; then
+            echo "No JIRA ticket found, skipping summary request."
+            exit 1
+          fi
+
+          # Make an API request to get the ticket summary
+          SUMMARY=$(curl -X POST "<your-api-url>/SummarizeJiraTicket" -d "TicketID=$JIRA_TICKET")
+          
+          # Output the summary for the next step
+          echo "::set-output name=summary::$SUMMARY"
+          
+      # 4. Post the Summary as a PR Comment
+      - name: Post Summary as a Comment
+        run: |
+          SUMMARY="${{ steps.summarize.outputs.summary }}"
+          if [[ -z "$SUMMARY" ]]; then
+            echo "No summary to post."
+            exit 1
+          fi
+
+          # Post the comment to the PR
+          gh pr comment ${{ github.event.pull_request.number }} --body "$SUMMARY"
+
+      # 5. Fail the job if no JIRA ticket was found
+      - name: Fail if no JIRA Ticket
+        if: ${{ steps.jira-check.outputs.jira_ticket == '' }}
+        run: exit 1
