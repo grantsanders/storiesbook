@@ -87,7 +87,7 @@ jobs:
           fi
 
           # Post the comment to the PR
-          gh pr comment ${{ github.event.pull_request.number }} --body "$SUMMARY"
+          gh pr comment ${{ github.event.pull_request.number }} --body "${{ env.summary }}"
 
       # 5. Fail the job if no JIRA ticket was found
       - name: Fail if no JIRA Ticket
