@@ -69,7 +69,6 @@ jobs:
           "
           
           # Prepend the text to the SUMMARY
-          SUMMARY="${PREPENDED_TEXT}${SUMMARY}"
 
           
           # Output the summary for the next step
