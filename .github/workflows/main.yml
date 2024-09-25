@@ -64,6 +64,8 @@ jobs:
           
       # 4. Post the Summary as a PR Comment
       - name: Post Summary as a Comment
+        env:  # Add environment variables here
+          GH_TOKEN: ${{ secrets.GH_SECRET }}
         run: |
           SUMMARY='${{ steps.summarize.outputs.summary }}'
           if [[ -z '$SUMMARY' ]]; then
