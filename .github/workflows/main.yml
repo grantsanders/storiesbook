@@ -47,8 +47,11 @@ jobs:
             exit 1
           fi
 
+          # Use the GitHub secret for the API URL
+          API_URL=${{ secrets.JIRA_API_URL }}
+
           # Make an API request to get the ticket summary
-          SUMMARY=$(curl -X POST "<your-api-url>/SummarizeJiraTicket" -d "TicketID=$JIRA_TICKET")
+          SUMMARY=$(curl -X POST "$API_URL=$JIRA_TICKET")
           
           # Output the summary for the next step
           echo "::set-output name=summary::$SUMMARY"
