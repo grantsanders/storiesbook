@@ -67,7 +67,7 @@ jobs:
           PREPENDED_TEXT="**Jira Ticket:** [$JIRA_TICKET]($JIRA_URL)\n\n"
           
           # Prepend the text to the SUMMARY
-          SUMMARY=$PREPENDED_TEXT$SUMMARY
+          SUMMARY=echo "$PREPENDED_TEXT$SUMMARY"
           
           # Output the summary for the next step
           # Write the SUMMARY to a GitHub environment file to preserve newlines
