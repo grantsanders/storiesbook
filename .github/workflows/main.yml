@@ -67,7 +67,10 @@ jobs:
           PREPENDED_TEXT="**Jira Ticket:** [$JIRA_TICKET]($JIRA_URL)
           
           "
-          
+
+          echo "link BEFORE PREPENDING: $$PREPENDED_TEXT"
+          echo "SUMMARY BEFORE PREPENDING: $SUMMARY"
+
           # Prepend the text to the SUMMARY
           SUMMARY="$PREPENDED_TEXT$SUMMARY"
           
