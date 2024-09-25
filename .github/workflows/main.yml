@@ -21,15 +21,15 @@ jobs:
       - name: Check for JIRA Ticket ID in PR
         id: jira-check
         run: |
-          TICKET_REGEX="([A-Z]+-\d+)"
+          TICKET_REGEX="([A-Z]+-[0-9]+)" # Match JIRA ticket pattern
           PR_TITLE="${{ github.event.pull_request.title }}"
           PR_BODY="${{ github.event.pull_request.body }}"
 
-          TICKET_REGEX="([A-Z]+-[0-9]+)"
-          PR_TITLE=$(echo "$PR_TITLE" | xargs | tr '[:lower:]' '[:upper:]')  # Trim and convert to uppercase
-          PR_BODY=$(echo "$PR_BODY" | xargs | tr '[:lower:]' '[:upper:]')    # Trim and convert to uppercase
-
-          # Try to find a JIRA ticket ID in the title or body
+          # Print PR_TITLE and PR_BODY for debugging
+          echo "PR_TITLE: $PR_TITLE"
+          echo "PR_BODY: $PR_BODY"
+          
+          # Check if JIRA ticket is in PR_TITLE
           if [[ "$PR_TITLE" =~ $TICKET_REGEX ]]; then
             echo "Found JIRA ticket in PR title: ${BASH_REMATCH[1]}"
             echo "::set-output name=jira_ticket::${BASH_REMATCH[1]}"
@@ -40,6 +40,7 @@ jobs:
             echo "No JIRA ticket found."
             exit 1
           fi
+
 
 
       # 3. Get JIRA Ticket Summary from API
