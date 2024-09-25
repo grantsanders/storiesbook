@@ -54,9 +54,9 @@ namespace storiesbook.Services
             StringBuilder promptBuilder = new StringBuilder();
             promptBuilder.AppendLine("You will be provided with an issue's details, including its creator, description, and comments(if there are any).");
             promptBuilder.AppendLine("Please format your response with the following sections:");
-            promptBuilder.AppendLine("1. **Issue Summary**: Provide a brief summary of the issue.");
-            promptBuilder.AppendLine("2. **People Involved**: List all people involved, including the issue creator and anyone who commented.");
-            promptBuilder.AppendLine("3. **Comments Summary**: Summarize the key points of the comments(if there are comments). Do not include comments summary if no comments exist");
+            promptBuilder.AppendLine("### Issue Summary: Provide a brief summary of the issue.");
+            promptBuilder.AppendLine("### People Involved: List all people involved, including the issue creator and anyone who commented.");
+            promptBuilder.AppendLine("### Comments Summary: Summarize the key points of the comments. If there are no comments, omit this line.");
             promptBuilder.AppendLine();
             promptBuilder.AppendLine("Here are the details:");
 
